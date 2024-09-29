@@ -74,7 +74,10 @@ if __name__ == "__main__":
     parser.add_argument("--out_dir", type=str, default="run_0")
     config = parser.parse_args()
 
-    pathlib.Path(config.out_dir).mkdir(parents=True, exist_ok=True)
+    # Ensure the output directory is created relative to the script's location
+    script_dir = pathlib.Path(__file__).parent.absolute()
+    out_dir = script_dir / config.out_dir
+    out_dir.mkdir(parents=True, exist_ok=True)
 
     algorithms = ["merge", "quick"]
     results = {}
