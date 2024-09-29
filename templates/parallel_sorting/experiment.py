@@ -7,6 +7,7 @@ from tqdm.auto import tqdm
 import pickle
 import pathlib
 import multiprocessing as mp
+from datetime import datetime
 
 def parallel_merge_sort(arr, num_processes):
     chunk_size = len(arr) // num_processes
@@ -96,7 +97,19 @@ if __name__ == "__main__":
                     "std_time": np.std(times)
                 }
 
-    with open(osp.join(config.out_dir, "results.json"), "w") as f:
+    with open(osp.join(out_dir, "results.json"), "w") as f:
         json.dump(results, f, indent=2)
 
-    print("Experiment completed. Results saved in", config.out_dir)
+    # Create final_info.json
+    final_info = {
+        "timestamp": datetime.now().isoformat(),
+        "data_sizes": config.data_sizes,
+        "max_cores": config.max_cores,
+        "num_runs": config.num_runs,
+        "algorithms": algorithms
+    }
+
+    with open(osp.join(out_dir, "final_info.json"), "w") as f:
+        json.dump(final_info, f, indent=2)
+
+    print("Experiment completed. Results and final info saved in", out_dir)
