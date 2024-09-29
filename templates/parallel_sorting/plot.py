@@ -9,14 +9,17 @@ print("Starting plot generation...")
 
 # LOAD FINAL RESULTS:
 algorithms = ["merge", "quick"]
-folders = os.listdir("./")
+# Get the directory of the current script
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# List the contents of the current directory
+folders = os.listdir(current_dir)
 final_results = {}
 
 print("Loading results from JSON files...")
 for folder in folders:
     if folder.startswith("run") and osp.isdir(folder):
         print(f"Processing folder: {folder}")
-        with open(osp.join(folder, "results.json"), "r") as f:
+        with open(osp.join(current_dir, folder, "results.json"), "r") as f:
             final_results[folder] = json.load(f)
 print("Results loaded successfully.")
 
