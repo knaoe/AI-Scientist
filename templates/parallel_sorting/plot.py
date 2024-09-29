@@ -46,7 +46,7 @@ def generate_color_palette(n):
 
 # Get the list of runs and generate the color palette
 runs = list(final_results.keys())
-colors = generate_color_palette(len(runs))
+colors = generate_color_palette(max(len(runs), len(algorithms)))
 
 print("Generating plots...")
 
@@ -97,8 +97,8 @@ for run in runs:
         merge_times = [results["merge"][size][core]["mean_time"] for core in cores]
         quick_times = [results["quick"][size][core]["mean_time"] for core in cores]
         
-        axs[i, 0].bar(x - width/2, merge_times, width, label='Merge Sort', color=colors[0])
-        axs[i, 0].bar(x + width/2, quick_times, width, label='Quick Sort', color=colors[1])
+        axs[i, 0].bar(x - width/2, merge_times, width, label='Merge Sort', color=colors[algorithms.index("merge")])
+        axs[i, 0].bar(x + width/2, quick_times, width, label='Quick Sort', color=colors[algorithms.index("quick")])
         
         axs[i, 0].set_title(f"Data Size: {size}")
         axs[i, 0].set_xlabel("Number of Cores")
