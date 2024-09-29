@@ -1,0 +1,10 @@
+[
+  {
+    "Name": "parallel_sorting_comparison",
+    "Title": "Comparing Parallel Sorting Algorithms: Performance Analysis across Different CPU Cores and Data Sizes",
+    "Experiment": "This experiment compares the performance of different parallel sorting algorithms (parallel merge sort, parallel quicksort) across varying data sizes and number of CPU cores. We use execution time as the primary evaluation metric.",
+    "Interestingness": 8,
+    "Feasibility": 9,
+    "Novelty": 6
+  }
+]
