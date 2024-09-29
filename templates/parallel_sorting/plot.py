@@ -5,15 +5,20 @@ import json
 import os
 import os.path as osp
 
+print("Starting plot generation...")
+
 # LOAD FINAL RESULTS:
 algorithms = ["merge", "quick"]
 folders = os.listdir("./")
 final_results = {}
 
+print("Loading results from JSON files...")
 for folder in folders:
     if folder.startswith("run") and osp.isdir(folder):
+        print(f"Processing folder: {folder}")
         with open(osp.join(folder, "results.json"), "r") as f:
             final_results[folder] = json.load(f)
+print("Results loaded successfully.")
 
 # CREATE LEGEND -- PLEASE FILL IN YOUR RUN NAMES HERE
 # Keep the names short, as these will be in the legend.
@@ -27,6 +32,8 @@ for run in runs:
     if run not in labels:
         labels[run] = run
 
+print(f"Runs detected: {runs}")
+
 # CREATE PLOTS
 
 # Create a programmatic color palette
@@ -38,8 +45,11 @@ def generate_color_palette(n):
 runs = list(final_results.keys())
 colors = generate_color_palette(len(runs))
 
+print("Generating plots...")
+
 # Plot 1: Line plot of execution time vs number of cores for each algorithm and data size
 for run in runs:
+    print(f"Generating execution time vs cores plot for {run}...")
     results = final_results[run]
     data_sizes = list(results[algorithms[0]].keys())
     
@@ -48,6 +58,7 @@ for run in runs:
     
     for i, size in enumerate(data_sizes):
         for j, algo in enumerate(algorithms):
+            print(f"  Processing {algo} sort for data size {size}...")
             cores = list(results[algo][size].keys())
             times = [results[algo][size][core]["mean_time"] for core in cores]
             std_times = [results[algo][size][core]["std_time"] for core in cores]
@@ -63,9 +74,11 @@ for run in runs:
     plt.tight_layout()
     plt.savefig(f"execution_time_vs_cores_{run}.png")
     plt.close()
+    print(f"Execution time vs cores plot for {run} saved.")
 
 # Plot 2: Bar plot comparing algorithms for each data size and number of cores
 for run in runs:
+    print(f"Generating algorithm comparison plot for {run}...")
     results = final_results[run]
     data_sizes = list(results[algorithms[0]].keys())
     cores = list(results[algorithms[0]][data_sizes[0]].keys())
@@ -77,6 +90,7 @@ for run in runs:
     width = 0.35
     
     for i, size in enumerate(data_sizes):
+        print(f"  Processing data size {size}...")
         merge_times = [results["merge"][size][core]["mean_time"] for core in cores]
         quick_times = [results["quick"][size][core]["mean_time"] for core in cores]
         
@@ -94,5 +108,6 @@ for run in runs:
     plt.tight_layout()
     plt.savefig(f"algorithm_comparison_{run}.png")
     plt.close()
+    print(f"Algorithm comparison plot for {run} saved.")
 
-print("Plots have been generated and saved.")
+print("All plots have been generated and saved.")
