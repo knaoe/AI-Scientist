@@ -101,15 +101,18 @@ if __name__ == "__main__":
         json.dump(results, f, indent=2)
 
     # Create final_info.json
-    final_info = {
-        "timestamp": datetime.now().isoformat(),
-        "data_sizes": config.data_sizes,
-        "max_cores": config.max_cores,
-        "num_runs": config.num_runs,
-        "algorithms": algorithms
-    }
+    final_infos = {}
+    for algorithm in algorithms:
+        final_infos[algorithm] = {
+            "means": {
+                "training_time": np.mean([results[algorithm][size][cores]["mean_time"] for size in config.data_sizes for cores in range(1, config.max_cores + 1)]),
+                "eval_loss": 0,  # Not applicable for sorting algorithms
+                "inference_time": np.mean([results[algorithm][size][cores]["mean_time"] for size in config.data_sizes for cores in range(1, config.max_cores + 1)]),
+                "kl_divergence": 0,  # Not applicable for sorting algorithms
+            }
+        }
 
     with open(osp.join(out_dir, "final_info.json"), "w") as f:
-        json.dump(final_info, f, indent=2)
+        json.dump(final_infos, f, indent=2)
 
     print("Experiment completed. Results and final info saved in", out_dir)
