@@ -9,20 +9,24 @@ import pathlib
 import multiprocessing as mp
 
 def parallel_merge_sort(arr, num_processes):
-    if len(arr) <= 1:
-        return arr
+    chunk_size = len(arr) // num_processes
+    chunks = [arr[i:i+chunk_size] for i in range(0, len(arr), chunk_size)]
     
-    if num_processes <= 1:
-        return sorted(arr)
+    with mp.Pool(processes=num_processes) as pool:
+        sorted_chunks = pool.map(sorted, chunks)
     
-    mid = len(arr) // 2
-    left = arr[:mid]
-    right = arr[mid:]
-    
-    with mp.Pool(processes=2) as pool:
-        left_sorted, right_sorted = pool.starmap(parallel_merge_sort, [(left, num_processes//2), (right, num_processes//2)])
-    
-    return merge(left_sorted, right_sorted)
+    return merge_sorted_arrays(sorted_chunks)
+
+def merge_sorted_arrays(arrays):
+    while len(arrays) > 1:
+        merged = []
+        for i in range(0, len(arrays), 2):
+            if i + 1 < len(arrays):
+                merged.append(merge(arrays[i], arrays[i+1]))
+            else:
+                merged.append(arrays[i])
+        arrays = merged
+    return arrays[0]
 
 def merge(left, right):
     result = []
@@ -42,16 +46,13 @@ def parallel_quicksort(arr, num_processes):
     if len(arr) <= 1:
         return arr
     
-    if num_processes <= 1:
-        return sorted(arr)
-    
     pivot = arr[len(arr) // 2]
     left = [x for x in arr if x < pivot]
     middle = [x for x in arr if x == pivot]
     right = [x for x in arr if x > pivot]
     
-    with mp.Pool(processes=2) as pool:
-        left_sorted, right_sorted = pool.starmap(parallel_quicksort, [(left, num_processes//2), (right, num_processes//2)])
+    with mp.Pool(processes=num_processes) as pool:
+        left_sorted, right_sorted = pool.map(sorted, [left, right])
     
     return left_sorted + middle + right_sorted
 
