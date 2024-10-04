@@ -282,6 +282,8 @@ def on_backoff(details):
     backoff.expo, requests.exceptions.HTTPError, on_backoff=on_backoff
 )
 def search_for_papers(query, result_limit=10) -> Union[None, List[Dict]]:
+    if not S2_API_KEY:
+        return None
     if not query:
         return None
     rsp = requests.get(
