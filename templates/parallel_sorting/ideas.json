@@ -1,0 +1,101 @@
+[
+    {
+        "Name": "parallel_sorting_comparison",
+        "Title": "Comparing Parallel Sorting Algorithms: Performance Analysis across Different CPU Cores and Data Sizes",
+        "Experiment": "This experiment compares the performance of different parallel sorting algorithms (parallel merge sort, parallel quicksort) across varying data sizes and number of CPU cores. We use execution time as the primary evaluation metric.",
+        "Interestingness": 8,
+        "Feasibility": 9,
+        "Novelty": 6,
+        "novel": true
+    },
+    {
+        "Name": "time_memory_scalability_sorting",
+        "Title": "Time, Memory, and Scalability Analysis of Parallel Sorting Algorithms",
+        "Experiment": "Extend the existing experiment to measure both execution time and peak memory usage using the memory_profiler library. Modify the run_experiment function to return time and memory metrics. Introduce a composite efficiency score combining time and memory usage. Add a scalability analysis component to evaluate how algorithms perform with increasing data sizes and core counts. Calculate speedup and efficiency metrics for each algorithm. Update the results structure to include all these metrics. Analyze the time-memory trade-offs and scalability characteristics of different algorithms across various scenarios.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 9,
+        "novel": true
+    },
+    {
+        "Name": "adaptive_distribution_aware_sorting",
+        "Title": "Adaptive Parallel Sorting Based on Data Distribution Analysis",
+        "Experiment": "Implement data generation for uniform, normal (\u03bc=0, \u03c3=1), exponential (\u03bb=1), and skewed (\u03b1=4) distributions using numpy. Modify run_experiment to accept distribution type. Compare relative performance of parallel merge sort and quicksort across distributions, sizes, and core counts. Implement an adaptive algorithm that analyzes sample statistics (e.g., skewness, kurtosis) to choose between merge sort and quicksort. Evaluate performance gains of the adaptive approach across various scenarios.",
+        "Interestingness": 9,
+        "Feasibility": 6,
+        "Novelty": 9,
+        "novel": true
+    },
+    {
+        "Name": "cache_friendly_parallel_sorting",
+        "Title": "Optimizing Parallel Sorting Algorithms with Cache-Friendly Techniques",
+        "Experiment": "Implement cache-oblivious parallel merge sort and block-based parallel quicksort. Modify run_experiment to include these new algorithms. Compare performance of original and cache-friendly variants across different data sizes and core counts. Develop a simple theoretical model to predict cache behavior based on data access patterns. Analyze the correlation between predicted cache efficiency and observed execution times. Update the results structure to include comparative analysis between original and cache-friendly variants, as well as the theoretical predictions versus actual performance.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 8,
+        "novel": true
+    },
+    {
+        "Name": "adaptive_hybrid_parallel_sorting",
+        "Title": "Adaptive Hybrid Parallel Sorting: A Dynamic Approach Combining Merge Sort and Quicksort",
+        "Experiment": "Implement an adaptive_hybrid_parallel_sort function that dynamically chooses between merge sort and quicksort based on data size, recursion depth, and a simple data distribution estimate. Use median-of-three pivot selection for quicksort. Modify run_experiment to include this new algorithm. Compare performance of the adaptive hybrid algorithm against pure merge sort and quicksort implementations across various data sizes and core counts. Analyze how often each sorting method is chosen in different scenarios and its impact on overall performance.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 8,
+        "novel": true
+    },
+    {
+        "Name": "memory_layout_parallel_sorting",
+        "Title": "Impact of Memory Layout on Parallel Sorting Performance: AoS vs. Simple Array",
+        "Experiment": "Implement two data layout strategies: Array of Structures (AoS) and simple array of integers. Modify data generation in run_experiment to create these layouts. Adjust parallel_merge_sort and parallel_quicksort to work with AoS layout. Compare performance across different layouts, data sizes, and core counts. Analyze execution times and infer cache efficiency from performance differences. Update results structure to include layout-specific performance metrics and comparative analysis.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 8,
+        "novel": true
+    },
+    {
+        "Name": "adaptive_load_balancing_sorting",
+        "Title": "Adaptive Load Balancing for Parallel Sorting in Variable Performance Environments",
+        "Experiment": "Implement a core_profiler function to measure the relative speed of each core based on small sorting tasks. Modify parallel_merge_sort and parallel_quicksort to use dynamic chunk sizing based on core performance. Implement a static workload distribution version as a baseline. Compare performance of adaptive, static, and original algorithms across different data sizes. Analyze how well the adaptive algorithms compensate for performance variability between cores. Evaluate the overhead introduced by core profiling and adaptive load balancing mechanisms.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 9,
+        "novel": true
+    },
+    {
+        "Name": "data_locality_parallel_sorting",
+        "Title": "Impact of Data Locality on Parallel Sorting Performance: Analysis of Merge Sort and Quicksort",
+        "Experiment": "Modify run_experiment to generate data with varying degrees of local ordering (0%, 25%, 50%, 75%, 100% locally sorted) using a sliding window approach. Compare performance of parallel merge sort and parallel quicksort across different local ordering levels, data sizes, and core counts. Implement counters for comparisons and swaps in both algorithms. Analyze how each algorithm's performance (execution time, number of comparisons, number of swaps) changes with increasing local ordering. Update results structure to include local ordering level, comparison count, and swap count. Visualize the relationship between local ordering and algorithm efficiency.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 9,
+        "novel": true
+    },
+    {
+        "Name": "data_type_impact_parallel_sorting",
+        "Title": "Impact of Data Types on Parallel Sorting Performance: Optimizing for Integers, Floats, and Strings",
+        "Experiment": "Modify run_experiment to generate three data types: 32-bit integers, 64-bit floats, and strings (fixed length of 16 characters). Adapt parallel_merge_sort and parallel_quicksort to handle these data types. Compare performance across the three data types, varying data sizes, and core counts. Implement a simple type-aware load balancing mechanism that adjusts chunk sizes based on estimated comparison costs. Analyze execution time, number of comparisons, and memory usage for each data type. Update results structure to include data type information and type-specific metrics. Evaluate the effectiveness of type-aware load balancing compared to the original approach. Discuss implications for real-world applications dealing with mixed data types.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 8,
+        "novel": true
+    },
+    {
+        "Name": "shared_vs_simulated_distributed_sorting",
+        "Title": "Shared Memory vs. Simulated Distributed Memory in Parallel Sorting: Performance Analysis and Scalability",
+        "Experiment": "Implement a simulated distributed version of merge sort and quicksort using multiprocessing with restricted communication (message passing only). Modify run_experiment to support both shared memory and simulated distributed memory implementations. Compare performance across different data sizes and core configurations. Analyze execution time, scalability, simulated communication overhead, and communication patterns. Update results structure to include paradigm information (shared vs. simulated distributed), relevant metrics, and communication statistics. Evaluate the efficiency trade-offs between the two approaches and identify scenarios where each paradigm excels.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 8,
+        "novel": true
+    },
+    {
+        "Name": "range_based_partitioning_sorting",
+        "Title": "Enhancing Parallel Sorting Performance through Range-Based Data Partitioning",
+        "Experiment": "Implement a range_based_partition function that divides data into roughly equal-sized partitions based on value ranges. Modify run_experiment to apply this partitioning before sorting. Compare performance of parallel merge sort and quicksort with and without partitioning across various data distributions, sizes, and core counts. Measure and analyze partitioning time, sorting time, total execution time, load balance across cores, and partition quality (using variance of partition sizes). Include a baseline comparison with non-partitioned sorting. Update results structure to include partitioning information and its impact on sorting performance relative to the baseline. Evaluate the trade-off between partitioning overhead and improved sorting efficiency.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 8,
+        "novel": true
+    }
+]
